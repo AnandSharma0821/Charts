@@ -728,10 +728,15 @@ open class BarChartRenderer: BarLineScatterCandleBubbleRenderer
                     }
                     else
                     {
-                        let range = e.ranges?[high.stackIndex]
-                        
-                        y1 = range?.from ?? 0.0
-                        y2 = range?.to ?? 0.0
+                        // Added the count check because of the index out of bound error
+                        if (e.ranges?.count ?? 0) > high.stackIndex, (e.ranges?.count ?? 0) > 0 {
+                            let range = e.ranges?[high.stackIndex]
+                            y1 = range?.from ?? 0.0
+                            y2 = range?.to ?? 0.0
+                        } else{
+                            y1 = 0.0
+                            y2 = 0.0
+                        }
                     }
                 }
                 else
